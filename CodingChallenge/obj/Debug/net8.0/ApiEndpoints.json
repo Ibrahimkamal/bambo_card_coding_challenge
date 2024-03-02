@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "CodingChallenge.Controllers.StoryController",
+    "Method": "GetStories",
+    "RelativePath": "api/stories/{storiesCount}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storiesCount",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

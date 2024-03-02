@@ -28,7 +28,7 @@ namespace CodingChallenge.Controllers
                     Score = story.Score,
                     Time = DateTimeOffset.FromUnixTimeSeconds(story.Time).UtcDateTime,
                     PostedBy = story.By,
-                    CommentCount = story.Kids.Count
+                    CommentCount = story.CommentsCount
                 }).ToList();
 
                 return Ok(result);

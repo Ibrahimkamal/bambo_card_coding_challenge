@@ -31,7 +31,7 @@ public class StoryService(IHttpClientFactory httpClientFactory, ILogger<StorySer
     {
         string url = "https://hacker-news.firebaseio.com/v0/beststories.json";
         long currentTimesstamp = getUnixTimestamp();
-        if (currentTimesstamp - StoriesIds.Timestamp < 60)
+        if (currentTimesstamp - StoriesIds.Timestamp < 500)
         {
             return;
         }
@@ -58,7 +58,7 @@ public class StoryService(IHttpClientFactory httpClientFactory, ILogger<StorySer
         long current_timestamp = getUnixTimestamp();
         if (Stories.ContainsKey(storyId))
         {
-            if (current_timestamp - this.Stories[storyId].Timestamp > 60)
+            if (current_timestamp - this.Stories[storyId].Timestamp > 500)
             {
                 return this.Stories[storyId].storyDetails;
             }
@@ -67,6 +67,7 @@ public class StoryService(IHttpClientFactory httpClientFactory, ILogger<StorySer
         {
             HttpClient client = _httpClientFactory.CreateClient();
             var storyModel = await client.GetFromJsonAsync<StoryModel>(url);
+            storyModel.CommentsCount = await GetCommentsCount(storyModel.Kids);
             StoryDetails storyDetails = new()
             {
                 Timestamp = current_timestamp,
@@ -80,6 +81,39 @@ public class StoryService(IHttpClientFactory httpClientFactory, ILogger<StorySer
             _logger.LogError($"An error occurred: {ex.Message}");
             throw;
         }
+    }
+    private async Task<int> GetCommentsCount(List<int> kids)
+    {
+        var commentCountTasks = new List<Task<int>>();
+
+        foreach (int kid in kids)
+        {
+            // Launch a task for each kid
+            commentCountTasks.Add(GetCommentCountAsync(kid));
+        }
+
+        // Wait for all tasks to complete and sum their results
+        int[] results = await Task.WhenAll(commentCountTasks);
+        return results.Sum();
+    }
+
+    private async Task<int> GetCommentCountAsync(int kid)
+    {
+        string url = $"https://hacker-news.firebaseio.com/v0/item/{kid}.json";
+        HttpClient client = _httpClientFactory.CreateClient();
+        CommentModel commentModel = await client.GetFromJsonAsync<CommentModel>(url);
+
+        int count = 0;
+        if (commentModel != null && commentModel.Type == "comment")
+        {
+            count = 1; // Count the current comment
+            if (commentModel.Kids != null && commentModel.Kids.Count > 0)
+            {
+                // Recursively count children comments in an async manner
+                count += await GetCommentsCount(commentModel.Kids);
+            }
+        }
+        return count;
     }
 
     private long getUnixTimestamp()

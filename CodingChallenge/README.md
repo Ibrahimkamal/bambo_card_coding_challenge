@@ -4,9 +4,13 @@ This project provides an efficient solution to interact with the Hacker News API
 
 ## Key Features
 
-- **Caching Mechanism**: Responses from the Hacker News API are cached for 60 seconds. This reduces the number of requests sent to the API, preventing overload and improving response time for subsequent requests.
+- **Caching Mechanism**: Responses from the Hacker News API are cached for 300 seconds (5 minutes). This reduces the number of requests sent to the API, preventing overload and improving response time for subsequent requests.
 - **Swagger UI Integration**: Easily test the API endpoints through a user-friendly interface provided by Swagger UI.
 - **Support for Multiple Request Methods**: The API can be tested using Swagger UI, Postman, or a simple curl command.
+
+## Assumptions
+
+The rate in which the data changes will not that frequent, that's why 5 minutes were used as a value for the refresh rate.
 
 ## Getting Started
 

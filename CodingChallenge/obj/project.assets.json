@@ -696,11 +696,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ikamal/Documents/Personal/bambo_card_coding_test/CodingChallenge/CodingChallenge.csproj",
+      "projectUniqueName": "/home/ikamal/Documents/Personal/bambo_card_coding_test/bambo_card_coding_challenge/CodingChallenge/CodingChallenge.csproj",
       "projectName": "CodingChallenge",
-      "projectPath": "/home/ikamal/Documents/Personal/bambo_card_coding_test/CodingChallenge/CodingChallenge.csproj",
+      "projectPath": "/home/ikamal/Documents/Personal/bambo_card_coding_test/bambo_card_coding_challenge/CodingChallenge/CodingChallenge.csproj",
       "packagesPath": "/home/ikamal/.nuget/packages/",
-      "outputPath": "/home/ikamal/Documents/Personal/bambo_card_coding_test/CodingChallenge/obj/",
+      "outputPath": "/home/ikamal/Documents/Personal/bambo_card_coding_test/bambo_card_coding_challenge/CodingChallenge/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ikamal/.nuget/NuGet/NuGet.Config"
